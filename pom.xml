@@ -19,6 +19,19 @@
 		<tags/>
 		<categories>[]</categories>
 		<fields>[]</fields>
+		
+		
+
+		<u>hyekyung</u>
+		<p>KUkjt@RuU4s9!p$</p>
+		<deploy.target>Hybrid</deploy.target>						
+		<deploy.targetType>server</deploy.targetType>  <!-- ? -->			 			
+		<deploy.environment>Sandbox</deploy.environment>						
+		<deploy.businessGroup>KD Test Group</deploy.businessGroup>						
+		<hybrid.name>testlogaprilgw</hybrid.name>						
+								
+								
+
 	</properties>
 
 	<build>
@@ -51,6 +64,43 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
+	
+	<profiles>
+		<profile>
+			<id>hybrid</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.mule.tools.maven</groupId>
+						<artifactId>mule-maven-plugin</artifactId>
+						<version>${mule.maven.plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<classifier>mule-application</classifier>
+							<armDeployment>
+								<uri>https://anypoint.mulesoft.com</uri>
+								<username>${u}</username>
+								<password>${p}</password>
+								<target>${deploy.target}</target>
+								<targetType>${deploy.targetType}</targetType>
+								<environment>${deploy.environment}</environment>
+								<muleVersion>${app.runtime}</muleVersion>
+								<businessGroup>${deploy.businessGroup}</businessGroup>
+								<applicationName>${hybrid.name}</applicationName>
+								<properties>
+									<api.name>${project.artifactId}</api.name>
+									<api.base>${api.base}</api.base>
+									<api.version>${api.version}</api.version>
+									<project.version>${project.version}</project.version>
+									<my.client_secret>${my.client_secret}</my.client_secret>
+								</properties>
+							</armDeployment>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>		
 
 	<repositories>
 		<repository>
