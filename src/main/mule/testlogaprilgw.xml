@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+	<flow name="testlogaprilgwFlow" doc:id="7b91db45-fad0-4d44-b32d-ab477813999d" >
+		<http:listener doc:name="Listener" doc:id="94408995-3175-437a-a540-8cdcba6c7be3" config-ref="HTTP_Listener_config" path="/log"/>
+		<set-variable value="#[now()]" doc:name="Set Variable: startTime" doc:id="34f5e3a3-c8c3-4683-bbca-56abb214e787" variableName="startTime"/>
+		<set-variable value="#[now()]" doc:name="Set Variable: endTime" doc:id="4637784b-cca6-4036-8897-6382648c58c5" variableName="endTime"/>
+		<ee:transform doc:name="Transform Message" doc:id="99dec5ac-a6fc-4646-bace-cb09573a0c89" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	payload: payload,
+	attributes: attributes,
+	targetUrl: attributes.headers.host,
+	sourceUrl: splitBy(attributes.localAddress,"/")[1],
+	apiType: attributes.method,
+	startTime : vars.startTime as String {format: "yyyy-MM-dd HH:mm:ss"},
+	endTime: vars.endTime as String {format: "yyyy-MM-dd HH:mm:ss"},
+	duration: (vars.endTime - vars.startTime) as String {format: "yyyy-MM-dd HH:mm:ss"}
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="caeb739e-2ecc-4e58-ab43-0b686e751958" message="#[payload]"/>
+	</flow>
+</mule>
