@@ -76,7 +76,9 @@
 						<version>${mule.maven.plugin.version}</version>
 						<extensions>true</extensions>
 						<configuration>
+							<!-- 
 							<classifier>mule-application</classifier>
+							 -->
 							<armDeployment>
 								<uri>https://anypoint.mulesoft.com</uri>
 								<username>${u}</username>
