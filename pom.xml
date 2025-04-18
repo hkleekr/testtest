@@ -10,6 +10,7 @@
 	<name>testlogaprilgw</name>
 
 	<description/>
+	<!-- 이것이 parent POM인가? -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -18,19 +19,7 @@
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
 		<tags/>
 		<categories>[]</categories>
-		<fields>[]</fields>
-		
-		
-
-		<u>hyekyung</u>
-		<p>KUkjt@RuU4s9!p$</p>
-		<deploy.target>Hybrid</deploy.target>						
-		<deploy.targetType>server</deploy.targetType>  <!-- ? -->			 			
-		<deploy.environment>Sandbox</deploy.environment>						
-		<deploy.businessGroup>KD Test Group</deploy.businessGroup>						
-		<hybrid.name>testlogaprilgw</hybrid.name>						
-								
-								
+		<fields>[]</fields>	
 
 	</properties>
 
@@ -46,7 +35,15 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<!-- add Runtime Manager Agent Deployment setting  start -->
+				<configuration>
+					<agentDeployment>
+						<uri>http://20.41.104.35:8083</uri>  <!-- Mule 인스턴스가 설치된 서버 URI -->
+					</agentDeployment>
+				</configuration>
+				<!-- add Runtime Manager Agent Deployment setting  end -->
 			</plugin>
+
 		</plugins>
 	</build>
 
@@ -65,45 +62,6 @@
 		</dependency>
 	</dependencies>
 	
-	<profiles>
-		<profile>
-			<id>hybrid</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.mule.tools.maven</groupId>
-						<artifactId>mule-maven-plugin</artifactId>
-						<version>${mule.maven.plugin.version}</version>
-						<extensions>true</extensions>
-						<configuration>
-							<!-- 
-							<classifier>mule-application</classifier>
-							 -->
-							<armDeployment>
-								<uri>https://anypoint.mulesoft.com</uri>
-								<username>${u}</username>
-								<password>${p}</password>
-								<target>${deploy.target}</target>
-								<targetType>${deploy.targetType}</targetType>
-								<environment>${deploy.environment}</environment>
-								<muleVersion>${app.runtime}</muleVersion>
-								<businessGroup>${deploy.businessGroup}</businessGroup>
-								<applicationName>${hybrid.name}</applicationName>
-								<properties>
-									<api.name>${project.artifactId}</api.name>
-									<api.base>${api.base}</api.base>
-									<api.version>${api.version}</api.version>
-									<project.version>${project.version}</project.version>
-									<my.client_secret>${my.client_secret}</my.client_secret>
-								</properties>
-							</armDeployment>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>		
-
 	<repositories>
 		<repository>
 			<id>anypoint-exchange-v3</id>

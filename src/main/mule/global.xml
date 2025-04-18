@@ -11,5 +11,4 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 	</http:listener-config>
 	<configuration-properties doc:name="Configuration properties" doc:id="ab27f626-1366-4a76-aef6-9649c2475a5b" file="${env}.properties" />
 	<global-property doc:name="Global Property" doc:id="54dd2cf6-1d77-4545-a41b-e61342eec6f3" name="env" value="local" />
-	<api-gateway:autodiscovery apiId="20300872" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="91c668f3-ce86-44b3-be2a-08dc297ca070" flowRef="testlogaprilgwFlow" />
 </mule>
